@@ -21,23 +21,25 @@ def login():
         
         if not username or not password:
             return jsonify({'message': 'Username and password are required!'}), 400
-        
+
         if username in users and users[username]['password'] == password:
             return jsonify({'message': 'Login successful'}), 200 
-    
-        else:
-            return jsonify({'message': 'Invalid username or password'}), 401
+
+        return jsonify({'message': 'Invalid username or password'}), 401
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/user-info', methods=['GET'])
 def get_user_info():
     username = request.args.get('username')
 
     if username in users:
-        return jsonify(users[username]), 200 
+        return jsonify({'password': users[username]['password']}), 200 
     else:
         return jsonify({'message': 'User not found'}), 404
+
+
 
 
 @app.route('/translate', methods=['POST'])

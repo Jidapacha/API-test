@@ -79,15 +79,15 @@ class TestIdempotent(unittest.TestCase):
 
 ### 7 Safe ###
 class TestSafe(unittest.TestCase):
-    base_url = 'http://127.0.0.1:5000'
+    def setUp(self):
+        self.app = app.test_client()
+
     def test_safe(self):
-        endpoint = '/user-info'
-        params = {'username': 'user1'}  
-        response = requests.get(self.base_url + endpoint, params=params)
-        
+        response = self.app.get('/user-info?username=user1')
+
         self.assertEqual(response.status_code, 200)
-        expected_data = {'username': 'user1', 'password': 'pass1'}  
-        self.assertEqual(response.json(), expected_data)
+        expected_data = {'password': 'pass1'}
+        self.assertEqual(response.json, expected_data)
 
 ### 8 Translate ###
 class TestTranslate(unittest.TestCase):
