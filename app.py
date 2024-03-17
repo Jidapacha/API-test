@@ -55,14 +55,13 @@ def translate_text():
         return jsonify({'error': f'An error occurred during translation: {str(e)}'}), 500
     
 # Initial balance
-balance = 0
+balance = 100
 
 @app.route('/deposit', methods=['POST'])
 def deposit():
     global balance
     try:
-        data = request.get_json()
-        amount = data.get('amount', 0)
+        amount = int(request.args.get('amount', 0))
 
         if amount <= 0 or not isinstance(amount, int):
             return jsonify({'message': 'Invalid amount'}), 400
