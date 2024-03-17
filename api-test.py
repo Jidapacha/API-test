@@ -164,7 +164,6 @@ class TestWithdraw(unittest.TestCase):
         # Check if the response status code is 400 and the message is as expected
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['message'], 'Amount should be less than Balance')
-
     
 
 if __name__ == '__main__':
